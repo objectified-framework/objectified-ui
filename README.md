@@ -1,2 +1,4 @@
 # objectified-ui
-Objectified UI Application
+
+Objectified UI Built on NextJS.
+
