@@ -15,15 +15,15 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      console.log(`signIn: user=${JSON.stringify(user)} account=${JSON.stringify(account)} profile=${JSON.stringify(profile)} email=${JSON.stringify(email)} credentials=${JSON.stringify(credentials)}`);
+      console.log(`signIn: user=${JSON.stringify(user, null, 2)} account=${JSON.stringify(account, null, 2)} profile=${JSON.stringify(profile, null, 2)} email=${JSON.stringify(email)} credentials=${JSON.stringify(credentials, null, 2)}`);
       return true;
     },
     async redirect({ url, baseUrl }) {
       console.log(`redirect: url=${JSON.stringify(url)} baseUrl=${JSON.stringify(baseUrl)}`);
       return baseUrl;
     },
-    async session({ session, user, token }) {
-      console.log(`session: session=${JSON.stringify(session)} user=${JSON.stringify(user)} token=${JSON.stringify(token)}`);
+    async session({ session, token, user }) {
+      console.log(`session: session=${JSON.stringify(session, null, 2)} user=${JSON.stringify(user, null, 2)} token=${JSON.stringify(token, null, 2)}`);
       return session;
     },
     async jwt({ token, user, account, profile, isNewUser }) {
