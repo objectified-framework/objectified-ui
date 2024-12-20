@@ -1,6 +1,8 @@
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
+import {LoginDto} from "@objectified-framework/objectified-services/dist/generated/dto";
+import {AuthLogin} from "@objectified-framework/objectified-services/src/generated/clients";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -14,9 +16,21 @@ export const authOptions: NextAuthOptions = {
     })
   ],
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account: any, profile, email, credentials }) {
+      if (account.provider === 'github') {
+        // Github login path
+        const loginDto: LoginDto = {
+          emailAddress: <string>user['email'],
+          source: ['github'],
+        };
+
+        console.log('Login path.', loginDto);
+
+        return false;
+      }
+
       console.log(`signIn: user=${JSON.stringify(user, null, 2)} account=${JSON.stringify(account, null, 2)} profile=${JSON.stringify(profile, null, 2)} email=${JSON.stringify(email)} credentials=${JSON.stringify(credentials, null, 2)}`);
-      return true;
+      return false;
     },
     async redirect({ url, baseUrl }) {
       console.log(`redirect: url=${JSON.stringify(url)} baseUrl=${JSON.stringify(baseUrl)}`);
