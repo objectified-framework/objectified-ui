@@ -3,6 +3,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import { NextAuthOptions } from 'next-auth';
 import {LoginDto} from "@objectified-framework/objectified-services/dist/generated/dto";
 import {AuthLogin} from "@objectified-framework/objectified-services/src/generated/clients";
+import axios from 'axios';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -23,6 +24,8 @@ export const authOptions: NextAuthOptions = {
           emailAddress: <string>user['email'],
           source: ['github'],
         };
+
+        await axios.post('/auth');
 
         console.log('Login path.', loginDto);
 
